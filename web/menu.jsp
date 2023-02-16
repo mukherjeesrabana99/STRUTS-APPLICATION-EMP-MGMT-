@@ -5,12 +5,62 @@
     <head>
         <title>Employee Management</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://code.jquery.com/jquery-3.6.3.js" 
+                            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" 
+                            crossorigin="anonymous">
+    </script>
         <meta name="theme-color" content="#712cf9">
-
-        <!-- Custom styles for this template -->
-<!--        <link href="css/header.css" rel="stylesheet">-->
-        <!--<link href="css/carousel.css" rel="stylesheet">-->
     </head>
+    
+    <script>
+        
+        function fetchEmployees(){
+            console.log("fetch employees working");
+            $.ajax({
+                 url: 'FetchEmployess',
+                 
+                 success: function (responseText) {
+//                        alert(responseText);
+                        $("#container").html(responseText);
+                 }
+              });
+            
+            
+        }
+        
+        function preAddEmployee(){
+            console.log("pre add employee working");
+            $.ajax({
+                 url: 'PreAddEmployee',
+                 
+                 success: function (responseText) {
+//                        alert(responseText);
+                        $("#container").html(responseText);
+                 }
+              });
+            
+            
+        }
+        
+        function preSearchEmployee(){
+            console.log("pre searcj employee working");
+            $.ajax({
+                 url: 'PreSearchEmployee',
+                 
+                 success: function (responseText) {
+//                        alert(responseText);
+                        $("#container").html(responseText);
+                 }
+              });
+            
+            
+        }
+        
+        
+        
+        
+    </script>
+    
     <header class="site-header sticky-top p-3 text-bg-dark">
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
@@ -20,10 +70,12 @@
 
                 <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
                     <li><a href="employeeDetails.jsp" class="nav-link px-2 text-secondary">Home</a></li>
-                    <li><a href="addemployee.jsp" class="nav-link px-2 text-white">Add Employee</a></li>
-                    <li><a href="employeeDetails.jsp" class="nav-link px-2 text-white">Show Employee</a></li>
-                    <li><a href="searchEmployee.jsp" class="nav-link px-2 text-white">Search Employee</a></li>
-                    <li><a href="#" class="nav-link px-2 text-white">Edit Employee</a></li> 
+                    <li><a style="cursor:pointer;" onClick="preAddEmployee()" class="nav-link px-2 text-white">Add Employee</a></li>
+                   
+                    <li><a style="cursor:pointer;" onClick="preSearchEmployee()" class="nav-link px-2 text-white">Search Employee</a></li>
+                    <li><a style="cursor:pointer;" onclick="fetchEmployees()" class="nav-link px-2 text-white">Show Employees</a></li>
+                    <li><a href="ConsumeAPI" class="nav-link px-2 text-white">Get API Data</a></li>
+                    <li><a href="GetTodoJSON" class="nav-link px-2 text-white">Todo List</a></li>
                     <li><a href="#" class="nav-link px-2 text-white"> <c:if test='${user.firstName!=null && user.lastName!=null}'>Welcome: ${user.firstName} ${user.lastName}</c:if></a> </li>
 
                 </ul>

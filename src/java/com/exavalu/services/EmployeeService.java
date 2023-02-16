@@ -6,12 +6,14 @@ package com.exavalu.services;
 
 
 import com.exavalu.models.Employee;
+import com.exavalu.utils.HTMLLayout;
 import com.exavalu.utils.JDBCConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -40,7 +42,7 @@ public class EmployeeService {
             Connection con = JDBCConnectionManager.getConnection();
             //String sql = "SELECT employeeId, firstName, lastName, phone, address, gender, age, basicSalary, .employees, employeedb.departments, employeedb.roles where employees.departmentId = departments.departmentId and employees.roleId = roles.roleId carAllowance, departmentName, roleName FROM employeedb.employees, employeedb.departments, employeedb.roles where employees.departmentId = departments.departmentId and employees.roleId = roles.roleId order by employeeId;";
             String sql = "select * from employees e, departments d, roles r "
-                    + "where e.departmentId=d.departmentId and e.roleId=r.roleId and status=1 order by e.employeeId";
+                    + "where e.departmentId=d.departmentId and e.roleId=r.roleId and status=1 order by e.employeeId DESC";
             PreparedStatement preparedStatement = con.prepareStatement(sql);
 
             ResultSet rs = preparedStatement.executeQuery();
@@ -68,7 +70,8 @@ public class EmployeeService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         System.out.println("Number of employees = "+empList.size());
         return empList;
@@ -106,7 +109,8 @@ public class EmployeeService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         return emp;
     }
@@ -178,7 +182,8 @@ public class EmployeeService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         System.out.println("Number of employees = "+empList.size());
         
@@ -214,8 +219,9 @@ public class EmployeeService {
                     result = true;
                 }
 
-        } catch (SQLException e) {
-			e.printStackTrace();
+        } catch (SQLException ex) {
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
             }
         return result;
   
@@ -254,7 +260,8 @@ public class EmployeeService {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         return result;
     }
@@ -280,7 +287,8 @@ public class EmployeeService {
             }
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         return result;
     }

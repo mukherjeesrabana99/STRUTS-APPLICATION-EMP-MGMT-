@@ -3,6 +3,7 @@ package com.exavalu.utils;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -34,9 +35,10 @@ public class JDBCConnectionManager {
 
             }
 
-        } catch (ClassNotFoundException | SQLException e) {
+        } catch (ClassNotFoundException | SQLException ex) {
 
-            e.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
 
         return connection;

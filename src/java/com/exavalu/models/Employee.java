@@ -4,20 +4,27 @@
  */
 package com.exavalu.models;
 
+import com.exavalu.services.APIService;
 import com.exavalu.services.DepartmentService;
 import com.exavalu.services.EmployeeService;
 import com.exavalu.services.LoginService;
 import com.exavalu.services.RoleService;
+import com.exavalu.services.TodoService;
+import com.exavalu.utils.HTMLLayout;
 import com.mysql.cj.Session;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import java.io.IOException;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Map;
+import org.apache.log4j.Logger;
 import org.apache.struts2.dispatcher.ApplicationMap;
 import org.apache.struts2.dispatcher.SessionMap;
 import org.apache.struts2.interceptor.ApplicationAware;
 import org.apache.struts2.interceptor.SessionAware;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -73,6 +80,8 @@ public class Employee extends ActionSupport implements ApplicationAware, Session
             
         } else {
             System.out.println("returning Failure from doLogin method");
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(LocalDateTime.now()+"Either email-id or password wrong ");
         }
 
         return result;
@@ -210,6 +219,78 @@ public class Employee extends ActionSupport implements ApplicationAware, Session
         else{
             sessionMap.put("Emp", emp);
         }
+        return result;
+    }
+    
+    public String getDataFromAPI() throws ParseException, IOException{
+        String result = "FAILURE";
+        ArrayList apiUsers = APIService.consumeDataFromAPI();
+        
+        APIUser apiUser = new APIUser();
+        boolean res = APIService.insertDataInDB(apiUsers);
+         
+        if(!apiUsers.isEmpty()){
+            result = "SUCCESS";
+            //String successMsg = "Entered API Data into Database!";
+            sessionMap.put("APIUsers", apiUsers);
+            sessionMap.put("APIUser", apiUser);
+            return result;
+        }
+        
+        return result;
+    }
+    
+    public String getTodos() throws ParseException, IOException{
+        String result = "FAILURE";
+        ArrayList todos= TodoService.getTodos();
+        System.out.println("todos arraylist: "+ todos.size());
+        if(!todos.isEmpty()){
+            result= "TODOS";
+            sessionMap.put("todos", todos);
+            System.out.println("todos fetched succesfully!!!");
+            
+            return result;
+        }
+        return result;
+    }
+    
+    public String fetchEmployees(){
+        String result="FAILURE";
+        ArrayList empList  = EmployeeService.getInstance().getAllEmployees();
+        if(!empList.isEmpty()){
+            sessionMap.put("empList", empList);
+            result= "EMPLOYEELIST";
+        }else{
+            System.out.println("no empployees fetched");
+            result="FAILURE";
+        }
+        
+        return result;
+    }
+    
+    public String preAddEmployee(){
+        String result="FAILURE";
+        ArrayList deptList  = DepartmentService.getAllDepartments();
+        ArrayList roleList  = RoleService.getAllRoles();
+        
+        sessionMap.put("deptList", deptList);
+        sessionMap.put("roleList", roleList);
+        
+        result= "SUCCESS";
+
+        
+        return result;
+    }
+    
+    public String preSearchEmployee(){
+        String result="SUCCESS";
+        ArrayList deptList  = DepartmentService.getAllDepartments();
+        ArrayList roleList  = RoleService.getAllRoles();
+        
+        sessionMap.put("deptList", deptList);
+        sessionMap.put("roleList", roleList);
+
+        
         return result;
     }
     

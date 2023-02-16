@@ -7,14 +7,17 @@ package com.exavalu.services;
 import com.exavalu.models.Country;
 import com.exavalu.models.District;
 import com.exavalu.models.Province;
-import com.exavalu.models.State;
+
 import com.exavalu.models.User;
+import com.exavalu.utils.HTMLLayout;
 import com.exavalu.utils.JDBCConnectionManager;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -60,7 +63,7 @@ public class LoginService {
             }
             
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            
         }
         
         
@@ -92,7 +95,8 @@ public class LoginService {
                 result = true;
             }
         }catch(SQLException ex){
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(LocalDateTime.now()+"  "+ex.getMessage());
 
         }
         return result;
@@ -122,7 +126,8 @@ public class LoginService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         System.err.println("Number of countries = "+countryList.size());
         return countryList;
@@ -153,7 +158,8 @@ public class LoginService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         System.err.println("Number of provinces = "+provinceList.size());
         return provinceList;
@@ -177,7 +183,8 @@ public class LoginService {
             }
             
         } catch (SQLException ex) {
-
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
 
         return user;
@@ -209,7 +216,8 @@ public class LoginService {
 
 
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
         System.err.println("Number of districts = "+districtList.size());
         return districtList;

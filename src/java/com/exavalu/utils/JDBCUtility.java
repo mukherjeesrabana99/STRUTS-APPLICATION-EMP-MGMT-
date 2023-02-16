@@ -8,6 +8,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -35,9 +36,10 @@ public class JDBCUtility {
 
             value = prop.getProperty(param);
 
-        } catch (IOException e) {
+        } catch (IOException ex) {
             // TODO Auto-generated catch block
-            e.printStackTrace();
+            Logger log = Logger.getLogger(HTMLLayout.class.getName());
+            log.error(ex.getMessage());
         }
 
         return value;

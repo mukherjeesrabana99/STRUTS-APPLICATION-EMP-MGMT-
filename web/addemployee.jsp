@@ -41,11 +41,46 @@
 
 
     
-
+<script src="https://code.jquery.com/jquery-3.6.3.js" 
+                            integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" 
+                            crossorigin="anonymous">
+    </script>
     
     <!-- Custom styles for this template -->
     <link href="css/signin.css" rel="stylesheet">
   </head>
+  <script>
+          $(document).ready(function () {
+              alert("func working")
+            $("form").submit(function (event) {
+                var formData = {
+                  firstName: $("#firstName").val(),
+                  lastName: $("#lastName").val(),
+                  phone: $("#phone").val(),
+                  address: $("#address").val(),
+                  age: $("#age").val(),
+                  basicSalary: $("#basicSalary").val(),
+                  carAllowance:$("#carAllowance").val(),
+                  gender:$("#gender").val(),
+                  departmentId:$("#departmentId").val(),
+                  roleId:$("#roleId").val()
+      
+            };
+
+            $.ajax({
+              type: "POST",
+              url: "AddEmployee",
+              data: formData
+            }).done(function (data) {
+              console.log(data);
+              $("#container").html(responseText);
+            });
+
+            event.preventDefault();
+          });
+        });
+      }
+  </script>
   <style>
   .required{
     content:" *";
@@ -53,7 +88,7 @@
   }
 </style>
   <body class="text-center">
-      <jsp:include page="menu.jsp"></jsp:include>
+      
     
 <main class="form-signin w-100 m-auto">
     
@@ -75,22 +110,22 @@
       <label for="floatingInput">Employee ID</label>
     </div>    -->
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="First Name" name="firstName" required maxlength="45">
+      <input type="text" class="form-control" id="firstName" placeholder="First Name" name="firstName" required maxlength="45">
       <label for="floatingInput">First Name<span class="required">*</span></label>
     </div>
     
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="Last Name" name="lastName" required maxlength="45">
+      <input type="text" class="form-control" id="lastName" placeholder="Last Name" name="lastName" required maxlength="45">
       <label for="floatingInput">Last Name<span class="required">*</span></label>
     </div>
     
     <div class="form-floating">
-      <input type="tel" class="form-control" id="floatingInput" placeholder="Phone Number" name="phone" required maxlength="13" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
+      <input type="tel" class="form-control" id="phone" placeholder="Phone Number" name="phone" required maxlength="13" pattern="[0-9]{3}[0-9]{3}[0-9]{4}">
       <label for="floatingInput">Phone Number<span class="required">*</span></label>
     </div>
     
     <div class="form-floating">
-      <input type="text" class="form-control" id="floatingInput" placeholder="Address" name="address" required maxlength="45">
+      <input type="text" class="form-control" id="address" placeholder="Address" name="address" required maxlength="45">
       <label for="floatingInput">Address<span class="required">*</span></label>
     </div>
         
@@ -102,17 +137,17 @@
 
     
     <div class="form-floating">
-        <input type="number" class="form-control" id="floatingInput" placeholder="age" name="age" min="15" max="100" required>
+        <input type="number" class="form-control" id="age" placeholder="age" name="age" min="15" max="100" required>
       <label for="floatingInput">Age<span class="required">*</span></label>
     </div>
         
     <div class="form-floating">
-      <input type="number" class="form-control" id="floatingInput" placeholder="basic salary" name="basicSalary" required>
+      <input type="number" class="form-control" id="basicSalary" placeholder="basic salary" name="basicSalary" required>
       <label for="floatingInput">Basic Salary<span class="required">*</span></label>
     </div>
     
     <div class="form-floating">
-      <input type="number" class="form-control" id="floatingInput" placeholder="Car Allowance" name="carAllowance" required>
+      <input type="number" class="form-control" id="carAllowance" placeholder="Car Allowance" name="carAllowance" required>
       <label for="floatingInput">Car Allowance<span class="required">*</span></label>
     </div>
        
@@ -128,8 +163,7 @@
  
       <div class="form-floating">
           
-          <c:set var="deptList" value='${DepartmentService.getAllDepartments()}'/>
-              <c:set var="dept" value='${Department}'/>
+          
                         
           <select name="departmentId" class="form-select" id="departmentId" required>
               <option value="0">Select a Department</option>
@@ -143,8 +177,7 @@
       </div>
           
       <div class="form-floating">
-          <c:set var="roleList" value='${RoleService.getAllRoles()}'/>
-          <c:set var="role" value='${Role}'/>
+          
           
                         <select name="roleId" class="form-select" id="roleId" required>
               <option value="0">Select a Role</option>

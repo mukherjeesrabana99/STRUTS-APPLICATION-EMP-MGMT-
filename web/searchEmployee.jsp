@@ -27,11 +27,6 @@
 </head>
 <body style="background-color: #f5f5f5">
 
-
- 
-
-    <jsp:include page="menu.jsp"></jsp:include>
-
     <form action="SearchEmployee" method="Post">
         <img class="mb-4" src="images/exavalu_logo.png" alt="exavalu logo" style="display: block; margin-left: auto; margin-right: auto" width="150" height="57">
         <br>
@@ -84,8 +79,7 @@
         <td>
             <div class="form-floating">
 
-                <c:set var="deptList" value='${DepartmentService.getAllDepartments()}'/>
-              <c:set var="dept" value='${Department}'/>
+                
 
                 <select name="departmentId" class="form-select" id="departmentId">
                     <option value="%">Select a Department</option>
@@ -99,8 +93,7 @@
         <td>
             <div class="form-floating">
                 
-                <c:set var="roleList" value='${RoleService.getAllRoles()}'/>
-                <c:set var="role" value='${Role}'/>
+                
                 <select name="roleId" class="form-select" id="roleId">
                     <option value="%">Select a Role</option>
                     <c:forEach items='${roleList}' var="role">
